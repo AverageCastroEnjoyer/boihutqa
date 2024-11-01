@@ -10,7 +10,4 @@ class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('title',)}
     # Vey hard work :( rip siam
 
-
-
-
 admin.site.register(Book,BookAdmin)

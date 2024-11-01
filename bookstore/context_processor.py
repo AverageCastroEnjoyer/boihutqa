@@ -26,4 +26,3 @@ def header_infos(request):
         'categories':categories,
          'total_cart_items':total_cart_items
     }
-

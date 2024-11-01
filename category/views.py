@@ -4,8 +4,6 @@ from .models import Category
 from django.core.paginator import Paginator,PageNotAnInteger, EmptyPage
 from category.models import Category
 
-
-
 def category(request, cat_slug=None):
     cat_name = ""
     if cat_slug is None:
@@ -30,5 +28,3 @@ def category(request, cat_slug=None):
          'category_name':cat_name,
     }
     return render(request,'books-cat.html', context)
-
-

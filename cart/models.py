@@ -8,11 +8,8 @@ class Cart(models.Model):
     def __str__(self):
         return self.cart_session
 
-
 class CartItems(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     is_active = models.BooleanField()
-
-

@@ -122,7 +122,3 @@ def view_invoice(request, invoice_id):
          return render(request,"view_invoice.html",context=context)
      else:
          return redirect("login")
-
-
-
-

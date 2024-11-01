@@ -5,8 +5,6 @@ from .models import Cart
 from .models import CartItems
 from bookstore.models import Book
 
-
-
 def add_to_cart(request, user_book):
     session  = request.session.session_key
     print(session)
@@ -52,8 +50,6 @@ def add_to_cart(request, user_book):
         cartitem_save.save()
     return redirect('cart')
 
-
-
 def update_cart_item(request, book_slug):
     if request.POST:
         session = request.session.session_key
@@ -72,11 +68,6 @@ def update_cart_item(request, book_slug):
         return redirect('cart')
     return redirect('cart')
 
-
-
-
-
-
 def delete_cart_item(request, book_slug):
     session = request.session.session_key
     my_cart = Cart.objects.get(cart_session=session)
@@ -84,7 +75,6 @@ def delete_cart_item(request, book_slug):
     cart_items = CartItems.objects.all().filter(cart=my_cart,book=book_item)
     cart_items.delete()
     return redirect('cart')
-
 
 def cart(request):
     session = request.session.session_key
@@ -99,8 +89,3 @@ def cart(request):
 
     }
     return render(request, "cart.html", context)
-
-
-
-
-

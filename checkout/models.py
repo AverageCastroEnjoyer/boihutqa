@@ -21,8 +21,6 @@ class order(models.Model):
     def __str__(self):
         return str(self.order_id)
 
-
-
 class order_list(models.Model):
     order_id = models.ForeignKey(order, blank=False,on_delete=models.DO_NOTHING)
     order_item = models.ForeignKey(Book, blank=False,on_delete=models.DO_NOTHING)
@@ -31,16 +29,9 @@ class order_list(models.Model):
     def __str__(self):
         return str(self.order_item)
 
-
-
 class order_note_admin(models.Model):
     order_id = models.ForeignKey(order,blank=False,on_delete=models.DO_NOTHING)
     message = models.CharField(max_length=3000,blank=True)
-
-
-
-
-
 
 class invoice(models.Model):
     status = (("NOT_PAID","Not Paid")
@@ -74,8 +65,5 @@ class invoice(models.Model):
     transaction_id  = models.CharField(max_length=100,blank=False,unique=True)
     order_note = models.CharField(max_length=500,blank=True)
 
-
     def __str__(self):
         return str(self.invoice_id)
-
-
