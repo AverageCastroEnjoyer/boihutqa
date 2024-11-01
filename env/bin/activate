@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/santy/Documentos/QA/ProyectoQA/boihut/env"
+VIRTUAL_ENV="/home/santy/Documentos/QA/boihutqa/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
