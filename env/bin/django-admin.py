@@ -1,4 +1,4 @@
-#!/home/santy/Documentos/QA/ProyectoQA/boihut/env/bin/python3
+#!/home/santy/Documentos/QA/boihutqa/env/bin/python3
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
