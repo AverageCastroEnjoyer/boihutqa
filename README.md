@@ -1,6 +1,15 @@
-Proyecto Aseguramiento de la calidad
-Para instalar:
+# Proyecto: Aseguramiento de la Calidad
 
+## Estudiantes
+- Santiago Ramos
+- Manfred Jones
+- Esteban Castro
+
+## Enlace al proyecto original
+[https://github.com/shaongitbd/boihut](https://github.com/shaongitbd/boihut)
+
+---
+## Instalacion
 ```python
 python3 -m venv env
 source env/bin/activate
@@ -10,22 +19,22 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-Para correr
+## Ejecucion
 ```python
 python3 manage.py runserver
 ```
 
-Para probrar tests unitarios
+## Probrar tests unitarios
 ```python
 python3 manage.py test
 ```
 
-Para probrar la cobertura
-Instalar la herramienta
+## Para probar la cobertura
+### Instalar la herramienta
 ```python
 pip install coverage
 ```
-Correr la herramienta
+### Correr la herramienta
 ```python
 coverage run manage.py test
 ```
