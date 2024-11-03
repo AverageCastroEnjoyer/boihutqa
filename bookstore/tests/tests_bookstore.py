@@ -25,31 +25,26 @@ class BookstoreTestCase(TestCase):
         )
 
     def test_create_book(self):
-        """Test if a book can be created successfully."""
         self.assertEqual(self.book.title, "Sample Book")
         self.assertEqual(self.book.price, 20)
         self.assertEqual(self.book.stocks, 10)
 
     def test_read_book(self):
-        """Test if a book can be read successfully."""
         book = Book.objects.get(slug="sample-book")
         self.assertEqual(book.title, "Sample Book")
 
     def test_update_book(self):
-        """Test if a book can be updated successfully."""
         self.book.title = "Updated Sample Book"
         self.book.save()
         self.assertEqual(self.book.title, "Updated Sample Book")
 
     def test_delete_book(self):
-        """Test if a book can be deleted successfully."""
         book_id = self.book.id
         self.book.delete()
         with self.assertRaises(Book.DoesNotExist):
             Book.objects.get(id=book_id)
 
     def test_unique_book_slug(self):
-        """Test if book slug is unique."""
         with self.assertRaises(Exception):
             Book.objects.create(
                 title="Another Sample Book",
@@ -61,11 +56,9 @@ class BookstoreTestCase(TestCase):
 
 
     def test_book_string_representation(self):
-        """Test the string representation of the book."""
         self.assertEqual(str(self.book), "Sample Book")
 
     def test_book_description_max_length(self):
-        """Test if the book description does not exceed max length."""
         long_description = 'A' * 3001  
         book = Book(
             title="Long Description Book",
@@ -80,13 +73,11 @@ class BookstoreTestCase(TestCase):
             book.full_clean()  
 
     def test_update_book_stock(self):
-        """Test if updating the book stock works correctly."""
         self.book.stocks += 5
         self.book.save()
         self.assertEqual(self.book.stocks, 15)
 
     def test_add_book_with_image(self):
-        """Test if a book can be added with an image."""
         new_book = Book.objects.create(
             title="Another Book",
             slug="another-book",
@@ -98,7 +89,6 @@ class BookstoreTestCase(TestCase):
         self.assertTrue(new_book.image.url.startswith('/media/images/books_img/'))
 
     def test_create_book_with_blank_fields(self):
-        """Test creating a book with optional blank fields."""
         book = Book(
             title="Book with Blank Fields",
             slug="book-with-blank-fields",
@@ -114,7 +104,6 @@ class BookstoreTestCase(TestCase):
         self.assertTrue(Book.objects.filter(title="Book with Blank Fields").exists())
         
     def test_create_book_with_invalid_price(self):
-        """Test creating a book with a negative price raises validation error."""
         with self.assertRaises(ValidationError):
             book = Book(
                 title="Invalid Price Book",
@@ -126,7 +115,6 @@ class BookstoreTestCase(TestCase):
             book.full_clean()  
 
     def test_create_book_with_negative_stocks(self):
-        """Test creating a book with negative stocks raises validation error."""
         with self.assertRaises(ValidationError):
             book = Book(
                 title="Invalid Stocks Book",
@@ -138,7 +126,6 @@ class BookstoreTestCase(TestCase):
             book.full_clean()  
 
     def test_create_book_with_slug_collision(self):
-        """Test creating a book with an existing slug raises validation error."""
         Book.objects.create(
             title="Another Book",
             slug="unique-slug", 
@@ -159,7 +146,6 @@ class BookstoreTestCase(TestCase):
 
     
     def test_retrieve_book(self):
-        """Test retrieving a book by its slug."""
         retrieved_book = Book.objects.get(slug=self.book.slug)
         self.assertEqual(retrieved_book.title, self.book.title)
         self.assertEqual(retrieved_book.price, self.book.price)
@@ -167,7 +153,6 @@ class BookstoreTestCase(TestCase):
         self.assertEqual(retrieved_book.category, self.book.category)
     
     def test_book_price_validation(self):
-        """Test if setting a negative price raises validation error."""
         with self.assertRaises(ValidationError):
             invalid_book = Book(
                 title="Invalid Price Book",
