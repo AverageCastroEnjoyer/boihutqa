@@ -1,3 +1,4 @@
+#category/apps.py
 from django.apps import AppConfig
 
 class CategoryConfig(AppConfig):

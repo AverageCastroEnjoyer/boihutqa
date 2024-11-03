@@ -42,14 +42,14 @@ def checkout_req(request):
             invoice_exits = invoice.objects.filter(transaction_id=transaction_id).exists()
 
             if invoice_exits == True:
-                messages.error(request,"Sorry, transaction Id alreay exits.")
+                messages.error(request,"Sorry, transaction Id already exits.")
                 return redirect("checkout_page")
 
 
             # working on order model
 
             client = request.user
-            print(client)
+            #print(client)
             order_note = request.POST['order_note']
             # Unsafe to grab total from get or post req
             # So, I think it's bettter for me to comment out this line.
@@ -72,11 +72,11 @@ def checkout_req(request):
             session = request.session.session_key
 
             cart = Cart.objects.get(cart_session=session)
-            print(cart)
+            #print(cart)
             cart_items_list = CartItems.objects.all().filter(cart=cart)
-            print(cart_items_list)
+            #print(cart_items_list)
             total = 0
-            print(order_save)
+            #print(order_save)
 
             for item in cart_items_list:
 
@@ -187,4 +187,3 @@ def checkout_page(request):
     else:
         messages.error(request,"You need to be registered to place an order ")
         return redirect("register")
-

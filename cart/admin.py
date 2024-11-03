@@ -1,3 +1,4 @@
+#cart/admin
 from django.contrib import admin
 from .models import Cart,CartItems
 # Register your models here.

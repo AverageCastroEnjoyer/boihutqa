@@ -98,3 +98,69 @@ class CartTestCase(TestCase):
         self.client.get(reverse('add_cart', args=[self.book.slug]))
         self.book.refresh_from_db()
         self.assertEqual(self.book.stocks, 9)
+
+    def test_cart_total_price_multiple_books(self):
+        another_book = Book.objects.create(
+            title="Another Book",
+            slug="another-book",
+            price=15,
+            stocks=10,
+            category=self.category,
+            image=SimpleUploadedFile("another_book_image.jpg", b"file_content", content_type="image/jpeg")
+        )
+        cart = Cart.objects.get(cart_session=self.client.session.session_key)
+        CartItems.objects.create(cart=cart, book=self.book, quantity=2, is_active=True)
+        CartItems.objects.create(cart=cart, book=another_book, quantity=1, is_active=True)
+        
+        response = self.client.get(reverse('cart'))
+        self.assertEqual(response.context['total'], 55)  # 2*20 + 1*15
+
+    def test_remove_item_from_cart_with_multiple_items(self):
+        another_book = Book.objects.create(
+            title="Another Book",
+            slug="another-book",
+            price=15,
+            stocks=10,
+            category=self.category,
+            image=SimpleUploadedFile("another_book_image.jpg", b"file_content", content_type="image/jpeg")
+        )
+        
+        cart = Cart.objects.get(cart_session=self.client.session.session_key)
+        CartItems.objects.create(cart=cart, book=self.book, quantity=1, is_active=True)
+        CartItems.objects.create(cart=cart, book=another_book, quantity=1, is_active=True)
+
+        response = self.client.get(reverse('delete_cart_item', args=[self.book.slug]))
+        self.assertFalse(CartItems.objects.filter(cart=cart, book=self.book).exists())
+        self.assertTrue(CartItems.objects.filter(cart=cart, book=another_book).exists())  # Another book should still be there
+    
+    def test_update_non_existent_cart_item(self):
+        response = self.client.post(reverse('update_cart', args=['non-existent-book-slug']), {'quantity': 1})
+        self.assertEqual(response.status_code, 404)  # Expecting a not found error
+
+    def test_cart_empty_after_deleting_all_items(self):
+        another_book = Book.objects.create(
+            title="Another Book",
+            slug="another-book",
+            price=15,
+            stocks=10,
+            category=self.category,
+            image=SimpleUploadedFile("another_book_image.jpg", b"file_content", content_type="image/jpeg")
+        )
+        
+        cart = Cart.objects.get(cart_session=self.client.session.session_key)
+        CartItems.objects.create(cart=cart, book=self.book, quantity=1, is_active=True)
+        CartItems.objects.create(cart=cart, book=another_book, quantity=1, is_active=True)
+
+        self.client.get(reverse('delete_cart_item', args=[self.book.slug]))
+        self.client.get(reverse('delete_cart_item', args=[another_book.slug]))
+
+        response = self.client.get(reverse('cart'))
+        self.assertContains(response, 'Your cart is empty')  # Ensure the empty message is shown
+
+    def test_set_cart_item_quantity_below_one(self):
+        cart = Cart.objects.get(cart_session=self.client.session.session_key)
+        CartItems.objects.create(cart=cart, book=self.book, quantity=1, is_active=True)
+        
+        response = self.client.post(reverse('update_cart', args=[self.book.slug]), {'quantity': 0})  # Try setting quantity to zero
+        item = CartItems.objects.get(cart=cart, book=self.book)
+        self.assertEqual(item.quantity, 1)  # Quantity should not change
