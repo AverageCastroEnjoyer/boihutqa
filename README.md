@@ -37,4 +37,5 @@ pip install coverage
 ### Correr la herramienta
 ```python
 coverage run manage.py test
+coverage report
 ```
