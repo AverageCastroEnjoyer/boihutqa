@@ -4,7 +4,9 @@ from accounts.models import Account
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 
 # Testing the Account model
 class AccountModelTests(TestCase):
@@ -44,7 +46,7 @@ class AccountModelTests(TestCase):
             email='user1@example.com',
             phone='1112223333',
             password='password123'
-        )
+        )   
         with self.assertRaises(Exception):
             Account.objects.create_user(
                 first_name='User2',
@@ -119,10 +121,150 @@ class AccountModelTests(TestCase):
         )
         self.assertFalse(user.has_perm('some_permission'))
 
+    # 8
+    def test_user_is_active_default(self):
+        user = Account.objects.create_user(
+            first_name='Active',
+            last_name='User',
+            username='activeuser',
+            email='active@example.com',
+            phone='1234567890',
+            password='password123'
+        )
+        self.assertTrue(user.is_active)
+
+    # 9
+    def test_superuser_is_admin(self):
+        superuser = Account.objects.create_superuser(
+            first_name='Admin',
+            last_name='User',
+            username='superadmin',
+            email='admin@example.com',
+            phone='0987654321',
+            password='adminpassword'
+        )
+        self.assertTrue(superuser.is_admin)
+
+    # 10
+    def test_user_repr(self):
+        user = Account.objects.create_user(
+            first_name='Jane',
+            last_name='Smith',
+            username='janesmith',
+            email='jane.smith@example.com',
+            phone='1234567890',
+            password='password123'
+        )
+        self.assertEqual(str(user), 'jane.smith@example.com')
+
+    # 11
+    def test_superuser_permissions(self):
+        superuser = Account.objects.create_superuser(
+            first_name='Super',
+            last_name='User',
+            username='superuser',
+            email='superuser@example.com',
+            phone='9876543210',
+            password='superpassword'
+        )
+        self.assertTrue(superuser.has_perm('some_permission'))
+
+    # 12
+    def test_user_has_no_perm(self):
+        user = Account.objects.create_user(
+            first_name='Regular',
+            last_name='User',
+            username='regularuser',
+            email='regular@example.com',
+            phone='1234567890',
+            password='password123'
+        )
+        self.assertFalse(user.has_perm('some_permission'))
+
+    # 13
+    def test_email_field_max_length(self):
+        user = Account.objects.create_user(
+            first_name='Long',
+            last_name='Email',
+            username='longemailuser',
+            email='longemailuser@example.com',
+            phone='1234567890',
+            password='password123'
+        )
+        self.assertEqual(len(user.email), 25)  # Longitud máx?
+
+    # 21
+    def test_username_max_length(self):
+        long_username = 'u' * 101  # 101 de longitud
+        with self.assertRaises(ValidationError):
+            user = Account.objects.create_user(
+                first_name='User',
+                last_name='Test',
+                username=long_username,
+                email='test@example.com',
+                phone='1234567890',
+                password='password123'
+            )
+            user.full_clean()  #Lanza la validación
+
+    # 25
+    def test_user_creation_sets_fields_correctly(self):
+        user = Account.objects.create_user(
+            first_name='Alice',
+            last_name='Wonderland',
+            username='alicewonder',
+            email='alice@example.com',
+            phone='1234567890',
+            password='alicepassword'
+        )
+        
+        # Campos establecidos correctamente
+        self.assertEqual(user.first_name, 'Alice')
+        self.assertEqual(user.last_name, 'Wonderland')
+        self.assertEqual(user.username, 'alicewonder')
+        self.assertEqual(user.email, 'alice@example.com')
+        self.assertEqual(user.phone, '1234567890')
+        
+        # Usuario está activo por defecto
+        self.assertTrue(user.is_active)
+        
+        # Usuario no es un superusuario
+        self.assertFalse(user.is_superuser)
+        
+        # Contraseña establecida correctamente
+        self.assertTrue(user.check_password('alicepassword'))
+
+    # 26
+    def test_superuser_creation_sets_fields_correctly(self):
+        superuser = Account.objects.create_superuser(
+            first_name='Bob',
+            last_name='Builder',
+            username='bobthebuilder',
+            email='bob@example.com',
+            phone='9876543210',
+            password='bobpassword'
+        )
+
+        # Campos establecidos correctamente
+        self.assertEqual(superuser.first_name, 'Bob')
+        self.assertEqual(superuser.last_name, 'Builder')
+        self.assertEqual(superuser.username, 'bobthebuilder')
+        self.assertEqual(superuser.email, 'bob@example.com')
+        self.assertEqual(superuser.phone, '9876543210')
+        
+        #Superusuario tiene permisos correctos
+        self.assertTrue(superuser.is_active)
+        self.assertTrue(superuser.is_superuser)
+        self.assertTrue(superuser.is_staff)
+        self.assertTrue(superuser.is_admin)
+        
+        # Contraseña establecida correctamente
+        self.assertTrue(superuser.check_password('bobpassword'))
+
 # Testing the views
 class AccountViewTests(TestCase):
 
-    # 8
+    # 14
     def test_registration_view_valid(self):
         response = self.client.post(reverse('register'), {
             'first_name': 'John',
@@ -136,7 +278,7 @@ class AccountViewTests(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirects on success
         self.assertTrue(Account.objects.filter(username='johndoe').exists())
 
-    # 9
+    # 15
     def test_registration_view_invalid_email(self):
         response = self.client.post(reverse('register'), {
             'first_name': 'John',
@@ -150,7 +292,7 @@ class AccountViewTests(TestCase):
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertIn("Sorry, Email can't contain a special character.", [str(message) for message in messages_list])
 
-    # 10
+    # 16
     def test_login_view_valid(self):
         Account.objects.create_user(
             first_name='John',
@@ -167,7 +309,7 @@ class AccountViewTests(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirects on success
         self.assertTrue(response.wsgi_request.user.is_authenticated)
 
-    # 11
+    # 17
     def test_login_view_invalid(self):
         response = self.client.post(reverse('login'), {
             'email': 'nonexistent@example.com',
@@ -176,14 +318,14 @@ class AccountViewTests(TestCase):
         self.assertEqual(response.status_code, 200)  # Renders login page
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
-    # 12
+    # 18
     def test_logout_view(self):
         self.client.login(email='john@example.com', password='password123')
         response = self.client.get(reverse('logout'))
         self.assertEqual(response.status_code, 302)  # Redirects after logout
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
-    # 13
+    # 19
     def test_profile_edit_view_valid(self):
         user = Account.objects.create_user(
             first_name='John',
@@ -202,20 +344,8 @@ class AccountViewTests(TestCase):
         }, follow= True)
         user2 = Account.objects.get(email='john@example.com')
         self.assertEqual(user2.last_name, 'Compiler')
-"""
-    # 14
-    def test_profile_edit_view_invalid_email(self):
-        self.client.login(email='john@example.com', password='password123')
-        response = self.client.post(reverse('profile_edit'), {
-            'first_name': 'John',
-            'last_name': 'Smith',
-            'email': 'invalid-email',
-            'phone': '1234567890',
-        })
-        self.assertEqual(response.status_code, 200)  # Renders edit profile page
-        self.assertFormError(response, 'form', 'email', "Enter a valid email address.")
 
-    # 15
+    # 20
     def test_change_password_view_valid(self):
         user = Account.objects.create_user(
             first_name='Jane',
@@ -235,148 +365,39 @@ class AccountViewTests(TestCase):
         user.refresh_from_db()
         self.assertTrue(user.check_password('newpassword456'))
 
-    # 16
-    def test_change_password_view_incorrect_old_password(self):
-        user = Account.objects.create_user(
-            first_name='Jane',
-            last_name='Doe',
-            username='janedoe',
-            email='jane@example.com',
-            phone='0987654321',
-            password='password123'
-        )
-        self.client.login(email='jane@example.com', password='password123')
-        response = self.client.post(reverse('change_pwd'), {
-            'old_password': 'wrongpassword',
-            'password': 'newpassword456',
-            'verify_password': 'newpassword456',
-        })
-        self.assertEqual(response.status_code, 200)  # Renders change password page
-        self.assertFormError(response, 'form', 'old_password', "Sorry, your old password doesn't match our record.")
+    # 22
+    def test_login_view_no_user(self):
+        response = self.client.post(reverse('login'), {
+            'email': 'nonexistent@example.com',
+            'password': 'password123'
+        }, follow=True)
+        self.assertEqual(response.status_code, 200)  # Renders login page
+        self.assertFalse(response.wsgi_request.user.is_authenticated)
+        messages_list = list(messages.get_messages(response.wsgi_request))
+        self.assertIn("Sorry your Email/Password don't match", [str(message) for message in messages_list])
 
-    # 17
-    def test_change_password_view_non_matching(self):
+    # 23
+    def test_change_password_view_mismatched_passwords(self):
         user = Account.objects.create_user(
-            first_name='Jane',
-            last_name='Doe',
-            username='janedoe',
-            email='jane@example.com',
-            phone='0987654321',
+            first_name='Bob',
+            last_name='Brown',
+            username='bobbrown',
+            email='bob@example.com',
+            phone='1234567890',
             password='password123'
         )
-        self.client.login(email='jane@example.com', password='password123')
+        self.client.login(email='bob@example.com', password='password123')
         response = self.client.post(reverse('change_pwd'), {
             'old_password': 'password123',
             'password': 'newpassword456',
-            'verify_password': 'differentpassword',
-        })
-        self.assertEqual(response.status_code, 200)  # Renders change password page
-        self.assertFormError(response, 'form', 'verify_password', "The two password fields didn't match.")
-
-    # 18
-    def test_inactive_user_login(self):
-        user = Account.objects.create_user(
-            first_name='John',
-            last_name='Doe',
-            username='johndoe',
-            email='john@example.com',
-            phone='1234567890',
-            password='password123'
-        )
-        user.is_active = False
-        user.save()
-        response = self.client.post(reverse('login'), {
-            'email': 'john@example.com',
-            'password': 'password123'
-        })
-        self.assertEqual(response.status_code, 200)  # Renders login page
-        self.assertContains(response, "Your account has been disabled.")
-
-    # 19
-    def test_password_reset_request_view(self):
-        response = self.client.post(reverse('password_reset'), {
-            'email': 'nonexistent@example.com'
-        })
-        self.assertEqual(response.status_code, 200)  # Renders password reset page
-        self.assertContains(response, "We have emailed you a link to reset your password.")
-
-    # 20
-    def test_password_reset_with_valid_user(self):
-        user = Account.objects.create_user(
-            first_name='Alice',
-            last_name='Doe',
-            username='alicedoe',
-            email='alice@example.com',
-            phone='1234567890',
-            password='password123'
-        )
-        response = self.client.post(reverse('dashboard/change_pwd'), {
-            'email': 'alice@example.com'
-        })
-        self.assertEqual(response.status_code, 200)  # Renders password reset page
-        self.assertContains(response, "We have emailed you a link to reset your password.")
-
-    # 21
-    def test_profile_view_for_logged_in_user(self):
-        user = Account.objects.create_user(
-            first_name='Charlie',
-            last_name='Brown',
-            username='charlie',
-            email='charlie@example.com',
-            phone='1234567890',
-            password='password123'
-        )
-        self.client.login(email='charlie@example.com', password='password123')
-        response = self.client.get(reverse('profile'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Charlie Brown')
-
-    # 22
-    def test_profile_view_for_non_logged_in_user(self):
-        response = self.client.get(reverse('profile'))
-        self.assertEqual(response.status_code, 302)  # Redirects to login
-
-    # 23
-    def test_account_deactivation(self):
-        user = Account.objects.create_user(
-            first_name='David',
-            last_name='Smith',
-            username='david',
-            email='david@example.com',
-            phone='1234567890',
-            password='password123'
-        )
-        self.client.login(email='david@example.com', password='password123')
-        response = self.client.post(reverse('deactivate_account'))
-        self.assertEqual(response.status_code, 302)  # Redirects after deactivation
-        self.assertFalse(Account.objects.filter(email='david@example.com').exists())
+            'verify_password': 'mismatchedpassword',  # Different from 'newpassword456'
+        }, follow=True)
+        self.assertEqual(response.status_code, 200)  # Stay on the change password page
+        messages_list = list(messages.get_messages(response.wsgi_request))
+        self.assertIn("Sorry your password and verify password doesn't match.", [str(message) for message in messages_list])
 
     # 24
-    def test_password_reset_confirmation_valid_token(self):
-        user = Account.objects.create_user(
-            first_name='Emma',
-            last_name='Johnson',
-            username='emma',
-            email='emma@example.com',
-            phone='1234567890',
-            password='password123'
-        )
-        # Assume we have a method to generate token, normally done by Django itself
-        token = 'dummy-token'  # This should be replaced with a valid token generation
-        response = self.client.post(reverse('password_reset_confirm', args=[token]), {
-            'new_password': 'newpassword456',
-            'confirm_password': 'newpassword456'
-        })
-        self.assertEqual(response.status_code, 302)  # Redirects on success
-        user.refresh_from_db()
-        self.assertTrue(user.check_password('newpassword456'))
-
-    # 25
-    def test_password_reset_confirmation_invalid_token(self):
-        response = self.client.post(reverse('password_reset_confirm', args=['invalid-token']), {
-            'new_password': 'newpassword456',
-            'confirm_password': 'newpassword456'
-        })
-        self.assertEqual(response.status_code, 200)  # Renders confirmation page
-        self.assertContains(response, "The password reset link is invalid.")
-"""
+    def test_profile_view_redirects_if_not_authenticated(self):
+        response = self.client.get(reverse('profile_edit'))
+        self.assertEqual(response.status_code, 302)  # Redirige al inicio de sesión
+        self.assertRedirects(response, '/login?next=/dashboard/profile_edit')  # Verifica la redirección al inicio de sesión
