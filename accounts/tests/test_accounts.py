@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 
-# Testing the Account model
 class AccountModelTests(TestCase):
 
     # 1
@@ -191,11 +190,11 @@ class AccountModelTests(TestCase):
             phone='1234567890',
             password='password123'
         )
-        self.assertEqual(len(user.email), 25)  # Longitud máx?
+        self.assertEqual(len(user.email), 25)  
 
     # 21
     def test_username_max_length(self):
-        long_username = 'u' * 101  # 101 de longitud
+        long_username = 'u' * 101  
         with self.assertRaises(ValidationError):
             user = Account.objects.create_user(
                 first_name='User',
@@ -205,7 +204,7 @@ class AccountModelTests(TestCase):
                 phone='1234567890',
                 password='password123'
             )
-            user.full_clean()  #Lanza la validación
+            user.full_clean() 
 
     # 25
     def test_user_creation_sets_fields_correctly(self):
@@ -218,20 +217,14 @@ class AccountModelTests(TestCase):
             password='alicepassword'
         )
         
-        # Campos establecidos correctamente
         self.assertEqual(user.first_name, 'Alice')
         self.assertEqual(user.last_name, 'Wonderland')
         self.assertEqual(user.username, 'alicewonder')
         self.assertEqual(user.email, 'alice@example.com')
         self.assertEqual(user.phone, '1234567890')
-        
-        # Usuario está activo por defecto
+    
         self.assertTrue(user.is_active)
-        
-        # Usuario no es un superusuario
         self.assertFalse(user.is_superuser)
-        
-        # Contraseña establecida correctamente
         self.assertTrue(user.check_password('alicepassword'))
 
     # 26
@@ -245,23 +238,20 @@ class AccountModelTests(TestCase):
             password='bobpassword'
         )
 
-        # Campos establecidos correctamente
         self.assertEqual(superuser.first_name, 'Bob')
         self.assertEqual(superuser.last_name, 'Builder')
         self.assertEqual(superuser.username, 'bobthebuilder')
         self.assertEqual(superuser.email, 'bob@example.com')
         self.assertEqual(superuser.phone, '9876543210')
         
-        #Superusuario tiene permisos correctos
         self.assertTrue(superuser.is_active)
         self.assertTrue(superuser.is_superuser)
         self.assertTrue(superuser.is_staff)
         self.assertTrue(superuser.is_admin)
         
-        # Contraseña establecida correctamente
         self.assertTrue(superuser.check_password('bobpassword'))
 
-# Testing the views
+
 class AccountViewTests(TestCase):
 
     # 14
@@ -275,7 +265,7 @@ class AccountViewTests(TestCase):
             'password': 'password123',
             'confirm_password': 'password123',
         })
-        self.assertEqual(response.status_code, 302)  # Redirects on success
+        self.assertEqual(response.status_code, 302)  
         self.assertTrue(Account.objects.filter(username='johndoe').exists())
 
     # 15
@@ -306,7 +296,7 @@ class AccountViewTests(TestCase):
             'email': 'john@example.com',
             'password': 'password123'
         })
-        self.assertEqual(response.status_code, 302)  # Redirects on success
+        self.assertEqual(response.status_code, 302)  
         self.assertTrue(response.wsgi_request.user.is_authenticated)
 
     # 17
@@ -315,14 +305,14 @@ class AccountViewTests(TestCase):
             'email': 'nonexistent@example.com',
             'password': 'wrongpassword'
         }, follow=True)
-        self.assertEqual(response.status_code, 200)  # Renders login page
+        self.assertEqual(response.status_code, 200) 
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
     # 18
     def test_logout_view(self):
         self.client.login(email='john@example.com', password='password123')
         response = self.client.get(reverse('logout'))
-        self.assertEqual(response.status_code, 302)  # Redirects after logout
+        self.assertEqual(response.status_code, 302)  
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
     # 19
@@ -361,7 +351,7 @@ class AccountViewTests(TestCase):
             'password': 'newpassword456',
             'verify_password': 'newpassword456',
         })
-        self.assertEqual(response.status_code, 302)  # Redirects on success
+        self.assertEqual(response.status_code, 302) 
         user.refresh_from_db()
         self.assertTrue(user.check_password('newpassword456'))
 
@@ -371,7 +361,7 @@ class AccountViewTests(TestCase):
             'email': 'nonexistent@example.com',
             'password': 'password123'
         }, follow=True)
-        self.assertEqual(response.status_code, 200)  # Renders login page
+        self.assertEqual(response.status_code, 200) 
         self.assertFalse(response.wsgi_request.user.is_authenticated)
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertIn("Sorry your Email/Password don't match", [str(message) for message in messages_list])
@@ -390,14 +380,14 @@ class AccountViewTests(TestCase):
         response = self.client.post(reverse('change_pwd'), {
             'old_password': 'password123',
             'password': 'newpassword456',
-            'verify_password': 'mismatchedpassword',  # Different from 'newpassword456'
+            'verify_password': 'mismatchedpassword', 
         }, follow=True)
-        self.assertEqual(response.status_code, 200)  # Stay on the change password page
+        self.assertEqual(response.status_code, 200) 
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertIn("Sorry your password and verify password doesn't match.", [str(message) for message in messages_list])
 
     # 24
     def test_profile_view_redirects_if_not_authenticated(self):
         response = self.client.get(reverse('profile_edit'))
-        self.assertEqual(response.status_code, 302)  # Redirige al inicio de sesión
-        self.assertRedirects(response, '/login?next=/dashboard/profile_edit')  # Verifica la redirección al inicio de sesión
+        self.assertEqual(response.status_code, 302) 
+        self.assertRedirects(response, '/login?next=/dashboard/profile_edit') 
