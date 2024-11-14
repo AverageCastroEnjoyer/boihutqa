@@ -4,3 +4,5 @@ regex==2020.11.13
 requests==2.25.1
 Pillow==8.0.1
 whitenoise==6.0.0
+
+selenium~=4.11.2
