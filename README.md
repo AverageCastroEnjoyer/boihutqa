@@ -34,8 +34,19 @@ python3 manage.py test
 ```python
 pip install coverage
 ```
-### Correr la herramienta
+### Correr la herramienta cobertura pruebas unitarias
 ```python
 coverage run manage.py test
 coverage report
+```
+
+### Hacer las pruebas de integracion
+```python
+make start-db
+python manage.py runserver
+```
+#### En otra terminal hacer lo siguiente
+```python
+python3 manage.py test automatedTets
+make clean-db
 ```
