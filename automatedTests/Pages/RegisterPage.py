@@ -51,8 +51,9 @@ class RegisterPage:
         self.get_password().send_keys(password)
         self.get_confirm_password().send_keys(confirm_password)
         self.get_phone().send_keys(phone)
-        time.sleep(3)
+        time.sleep(2)
         self.get_submit_login().click()
+        time.sleep(2)
 
     def register_completed(self):
         element = self.driver.find_element(By.XPATH, self.submit_successful)
