@@ -39,8 +39,12 @@ class HomePage:
     def open_register(self):
         self.get_user().click()
         self.get_register().click()
-        time.sleep(2)
+        time.sleep(1)
 
+    def open_login(self):
+        self.get_user().click()
+        self.get_login().click()
+        time.sleep(0.4)
 
 
 

@@ -40,7 +40,7 @@ coverage run manage.py test
 coverage report
 ```
 
-### Hacer las pruebas de integracion
+## Hacer las pruebas de integracion
 ```python
 make start-db
 python manage.py runserver

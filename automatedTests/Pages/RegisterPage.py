@@ -12,8 +12,8 @@ class RegisterPage:
         self.username = "username"
         self.submit_login = "/html/body/div/form/div/button"
         self.submit_successful = "/html/body/div/div[1]/div/span"
-
-
+        self.message = "/html/body/div/div/div/span"
+##842029
     def get_first_name(self):
         return self.driver.find_element(By.XPATH, self.first_name)
 
@@ -38,7 +38,11 @@ class RegisterPage:
     def get_submit_login(self):
         return self.driver.find_element(By.XPATH, self.submit_login)
 
-
+    def get_message(self):
+        return self.driver.find_element(By.XPATH, self.message)
+    
+    def get_message_text(self):
+        return self.get_message().text
 
 
     def register_fill(self, first_name, last_name, username, email, password, confirm_password, phone):
@@ -51,13 +55,10 @@ class RegisterPage:
         self.get_password().send_keys(password)
         self.get_confirm_password().send_keys(confirm_password)
         self.get_phone().send_keys(phone)
-        time.sleep(2)
+        time.sleep(1)
         self.get_submit_login().click()
         time.sleep(2)
 
-    def register_completed(self):
-        element = self.driver.find_element(By.XPATH, self.submit_successful)
-        return element.is_displayed()
 
     @staticmethod
     def get_base_url():
