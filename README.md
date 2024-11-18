@@ -43,7 +43,7 @@ coverage report
 ## Hacer las pruebas de integracion
 ```python
 make start-db
-python manage.py runserver
+python3 manage.py runserver
 ```
 #### En otra terminal hacer lo siguiente
 ```python
