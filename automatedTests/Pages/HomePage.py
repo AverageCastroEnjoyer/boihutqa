@@ -79,8 +79,8 @@ class HomePage:
         time.sleep(0.4)
 
     def hero_text_is_there(self):
-        element = self.driver.find_element(By.XPATH, self.hero)
-        return element.is_displayed()
+        actual_message = self.get_hero().text
+        return actual_message == "Buy your favorite books from our huge list of collection. You will get your product delivered to your doorsteps in 24 hours."
 
     def buy_book_now(self):
         self.get_buy_now().click()

@@ -41,7 +41,6 @@ class CartPageTests(unittest.TestCase):
     #47
     def test_check_cart(self):
         driver = self.driver
-        # self.driver.get(HomePage.get_base_url())
 
         home_page = HomePage(driver)
         home_page.open_login()
@@ -61,7 +60,6 @@ class CartPageTests(unittest.TestCase):
     #48
     def test_continue_shopping(self):
         driver = self.driver
-        # self.driver.get(HomePage.get_base_url())
 
         home_page = HomePage(driver)
         home_page.open_login()
@@ -83,7 +81,6 @@ class CartPageTests(unittest.TestCase):
     #49
     def test_add_book(self):
         driver = self.driver
-        # self.driver.get(HomePage.get_base_url())
 
         home_page = HomePage(driver)
         home_page.open_login()
@@ -102,7 +99,6 @@ class CartPageTests(unittest.TestCase):
     #50
     def test_modify_quantity(self):
         driver = self.driver
-        # self.driver.get(HomePage.get_base_url())
 
         home_page = HomePage(driver)
         home_page.open_login()
@@ -124,7 +120,6 @@ class CartPageTests(unittest.TestCase):
     #51
     def test_delete_book(self):
         driver = self.driver
-        # self.driver.get(HomePage.get_base_url())
 
         home_page = HomePage(driver)
         home_page.open_login()
@@ -146,7 +141,6 @@ class CartPageTests(unittest.TestCase):
     #52
     def test_out_of_stock(self):
         driver = self.driver
-        # self.driver.get(HomePage.get_base_url())
 
         home_page = HomePage(driver)
         home_page.open_login()

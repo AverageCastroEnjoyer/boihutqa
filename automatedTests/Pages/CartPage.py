@@ -48,7 +48,9 @@ class CartPage:
         time.sleep(2)
 
     def cart_opened(self):
-        return self.get_continue_shopping().is_displayed()
+        actual_message = self.get_continue_shopping().text
+        return actual_message == "Continue Shopping"
+
 
     def book_is_there(self):
         return self.get_book().is_displayed()
@@ -69,26 +71,17 @@ class CartPage:
         time.sleep(2)
 
     def check_empty_cart(self):
-        return self.get_empty().is_displayed()
+        actual_message = self.get_empty().text
+        return actual_message == "Your cart is empty"
 
     def buy_book(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(1)
         self.get_checkout().click()
+        time.sleep(1)
 
     def check_warning(self):
-        time.sleep(2)
-        return self.get_warning().is_displayed()
-
-
-
-
-
-
-
-
-
-
+        actual_message = self.get_warning().text
+        return actual_message == "You need to be registered to place an order"
 
 
     @staticmethod
