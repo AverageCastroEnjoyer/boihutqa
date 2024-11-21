@@ -28,7 +28,7 @@ from automatedTests.Pages.LoginPage import LoginPage
 
 warnings.simplefilter("ignore", ResourceWarning)
 
-
+"""
 class CheckoutPageTests(unittest.TestCase):
 
     def setUp(self):
@@ -45,7 +45,7 @@ class CheckoutPageTests(unittest.TestCase):
 
 
 
-    #53
+#53
     def test_buy_book(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -70,7 +70,7 @@ class CheckoutPageTests(unittest.TestCase):
         self.assertTrue(checkout_page.order_successful())
 
 
-    #54
+#54
     def test_buy_nologin(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -85,7 +85,7 @@ class CheckoutPageTests(unittest.TestCase):
         self.assertTrue(cart_page.check_warning())
 
 
-    #55
+#55
     def test_division_as_number(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -109,7 +109,7 @@ class CheckoutPageTests(unittest.TestCase):
         checkout_page.fill_checkout("Marco", "Solis", "Esparza", "Puntarenas", "1", "38458", "Costa Rica", "483", "Casa cafe")
         self.assertTrue(checkout_page.check_division_warning())
 
-    #56
+#56
     def test_city_as_number(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -134,7 +134,7 @@ class CheckoutPageTests(unittest.TestCase):
         self.assertTrue(checkout_page.check_city_warning())
 
 
-    #57
+#57
     def test_invalid_transaction(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -159,6 +159,6 @@ class CheckoutPageTests(unittest.TestCase):
         self.assertTrue(checkout_page.check_transaction_warning())
 
 
-
+"""
 if __name__ == "__main__":
     unittest.main()

@@ -41,7 +41,7 @@ class AdminPageTests(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    #58
+#58
     def test_login(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -51,7 +51,7 @@ class AdminPageTests(unittest.TestCase):
         admin_page.fill_login("admin@gmail.com", "admin")
         self.assertTrue(admin_page.login_successful())
 
-    #59
+#59
     def test_login_invalid(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -62,11 +62,11 @@ class AdminPageTests(unittest.TestCase):
         self.assertTrue(admin_page.login_unsuccesful())
 
 
-    #60 Manual
+#60 Manual
 
-    #61 Manual
+#61 Manual
 
-    #62
+#62
     def test_modify_order(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -77,7 +77,7 @@ class AdminPageTests(unittest.TestCase):
         admin_page.change_order_status()
         self.assertTrue(admin_page.check_order_saved())
 
-    # 63
+# 63
     def test_modify_user(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -88,7 +88,7 @@ class AdminPageTests(unittest.TestCase):
         admin_page.change_user()
         self.assertTrue(admin_page.check_account_saved())
 
-   # 64
+# 64
     def test_mark_unavailable(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -100,7 +100,7 @@ class AdminPageTests(unittest.TestCase):
         self.assertTrue(admin_page.check_book_saved())
 
 
-    # 65
+# 65
     def test_check_history(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -112,7 +112,7 @@ class AdminPageTests(unittest.TestCase):
         self.assertTrue(admin_page.check_history_opened())
 
 
-    # 66
+# 66
     def test_change_invoice(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -125,7 +125,7 @@ class AdminPageTests(unittest.TestCase):
 
 
 
-   # 67
+# 67
     def test_no_image_category(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -136,7 +136,7 @@ class AdminPageTests(unittest.TestCase):
         admin_page.add_book_info("Game", "game", "Scott", "fiction", "40", "25")
         self.assertTrue(admin_page.check_book_no_category_image())
 
-    # 68
+# 68
     def test_invalid_values(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -152,7 +152,7 @@ class AdminPageTests(unittest.TestCase):
 
 #69 Manual
 
-    # 70
+# 70
     def test_delete_category(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -164,7 +164,7 @@ class AdminPageTests(unittest.TestCase):
         self.assertTrue(admin_page.check_deleted_category())
 
 
-    # 71
+# 71
     def test_delete_book(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -175,7 +175,7 @@ class AdminPageTests(unittest.TestCase):
         admin_page.delete_book_task()
         self.assertTrue(admin_page.check_deleted_book())
 
-    # 72
+# 72
     def test_delete_account(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -187,7 +187,7 @@ class AdminPageTests(unittest.TestCase):
         self.assertTrue(admin_page.check_deleted_account())
 
 
-   # 73
+# 73
     def test_change_category_desc(self):
         driver = self.driver
         # self.driver.get(HomePage.get_base_url())
@@ -220,12 +220,6 @@ class AdminPageTests(unittest.TestCase):
 
         admin_page.logout_task()
         self.assertTrue(admin_page.check_logout())
-
-
-
-
-
-
 
 
 

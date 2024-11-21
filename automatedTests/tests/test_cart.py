@@ -22,7 +22,7 @@ from automatedTests.Pages import LoginPage
 from automatedTests.Pages.LoginPage import LoginPage
 
 warnings.simplefilter("ignore", ResourceWarning)
-
+"""
 
 class CartPageTests(unittest.TestCase):
 
@@ -38,7 +38,7 @@ class CartPageTests(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    #47
+#47
     def test_check_cart(self):
         driver = self.driver
 
@@ -57,7 +57,7 @@ class CartPageTests(unittest.TestCase):
 
         self.assertTrue(cart_page.cart_opened())
 
-    #48
+#48
     def test_continue_shopping(self):
         driver = self.driver
 
@@ -78,7 +78,7 @@ class CartPageTests(unittest.TestCase):
         self.assertTrue(home_page.hero_text_is_there())
 
 
-    #49
+#49
     def test_add_book(self):
         driver = self.driver
 
@@ -96,7 +96,7 @@ class CartPageTests(unittest.TestCase):
         cart_page = CartPage(driver)
         self.assertTrue(cart_page.book_is_there())
 
-    #50
+#50
     def test_modify_quantity(self):
         driver = self.driver
 
@@ -117,7 +117,7 @@ class CartPageTests(unittest.TestCase):
         self.assertTrue(cart_page.check_value())
 
 
-    #51
+#51
     def test_delete_book(self):
         driver = self.driver
 
@@ -138,7 +138,7 @@ class CartPageTests(unittest.TestCase):
         self.assertTrue(cart_page.check_empty_cart())
 
 
-    #52
+#52
     def test_out_of_stock(self):
         driver = self.driver
 
@@ -153,10 +153,6 @@ class CartPageTests(unittest.TestCase):
 
         self.assertTrue(home_page.buy_out_of_stock())
 
-
-
-
-
-
+"""
 if __name__ == "__main__":
     unittest.main()

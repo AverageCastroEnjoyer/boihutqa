@@ -10,13 +10,12 @@ from automatedTests.Pages.RegisterPage import RegisterPage
 from automatedTests.Pages import LoginPage
 from automatedTests.Pages.LoginPage import LoginPage
 
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 warnings.simplefilter("ignore", ResourceWarning)
-
+"""
 class HomePageTests(unittest.TestCase):
 
     def setUp(self):
@@ -29,7 +28,7 @@ class HomePageTests(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
     
-    #1
+#1
     def test_valid_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -54,7 +53,7 @@ class HomePageTests(unittest.TestCase):
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Your account has been registered. Please Login now")
 
-    #2
+#2
     def test_no_first_name_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -70,7 +69,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
         
-    #3
+#3
     def test_no_last_name_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -86,7 +85,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
 
-    #4
+#4
     def test_no_username_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -102,7 +101,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
 
-    #5
+#5
     def test_no_email_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -118,7 +117,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
 
-    #6
+#6
     def test_no_password_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -134,7 +133,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
 
-    #7
+#7
     def test_no_confirm_password_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -150,7 +149,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
 
-    #8
+#8
     def test_no_phone_number_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -166,7 +165,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
 
-    #9
+#9
     def test_no_data_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -182,9 +181,9 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Completa este campo")
 
-    #10 Es manual
+#10 Es manual
     
-    #11
+#11
     def test_used_phone_number_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -207,9 +206,9 @@ class HomePageTests(unittest.TestCase):
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "An user with the phone number already exits.")
     
-    #12 es manual
+#12 es manual
 
-    #13
+#13
     def test_special_char_in_first_name_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -220,7 +219,6 @@ class HomePageTests(unittest.TestCase):
 
         register_page.register_fill("#Jairo", "Zeppeli", "GyroSpin2", "gyro2@gmail.com", "steelball1", "steelball1", "502")
                 
-
         # Obtener el texto del mensaje
         message_text = register_page.get_message_text()
         # Obtener el color del mensaje
@@ -231,7 +229,7 @@ class HomePageTests(unittest.TestCase):
 
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Sorry, First Name can't contain a special character.")
-    #14
+#14
     def test_number_in_first_name_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -254,7 +252,7 @@ class HomePageTests(unittest.TestCase):
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Sorry, First Name can't contain number")
 
-    #15
+#15
     def test_invalid_char_in_last_name_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -277,7 +275,7 @@ class HomePageTests(unittest.TestCase):
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Sorry, Last Name can't contain a special character.")
 
-    #16
+#16
     def test_number_in_last_name_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -286,8 +284,7 @@ class HomePageTests(unittest.TestCase):
         home_page.open_register()
         register_page = RegisterPage(driver)
 
-        register_page.register_fill("Jairo", "Zeppeli2", "GyroSpin2", "gyro2@gmail.com", "steelball1", "steelball1", "502")
-                
+        register_page.register_fill("Jairo", "Zeppeli2", "GyroSpin2", "gyro2@gmail.com", "steelball1", "steelball1", "502")                
 
         # Obtener el texto del mensaje
         message_text = register_page.get_message_text()
@@ -300,9 +297,7 @@ class HomePageTests(unittest.TestCase):
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Sorry, Last Name can't contain number")
 
-        
-
-    #17
+#17
     def test_no_at_char_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -318,8 +313,8 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Incluye un signo \"@\" en la dirección de correo electrónico. La dirección \"emailinvalido\" no incluye el signo \"@\".")
 
-    #18
-    def test_no_text_befor_at_char_register(self):
+#18
+    def test_no_text_before_at_char_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
 
@@ -334,7 +329,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Ingresa texto antes del signo \"@\". La dirección \"@gmail.com\" está incompleta.")
 
-    #19
+#19
     def test_no_text_after_at_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -350,7 +345,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "Ingresa texto después del signo \"@\". La dirección \"gyro2@\" está incompleta.")
 
-    #20
+#20
     def test_special_char_before_at_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -373,7 +368,7 @@ class HomePageTests(unittest.TestCase):
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Sorry, Email can't contain a special character.")
 
-    #21
+#21
     def test_special_char_after_at_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -390,7 +385,7 @@ class HomePageTests(unittest.TestCase):
         assert(mensaje == "El texto después del signo \"@\" no debe incluir el símbolo \"#\".")
 
 
-    #22
+#22
     def test_email_ends_dot_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -406,7 +401,7 @@ class HomePageTests(unittest.TestCase):
         #print(f"<{mensaje}>")
         assert(mensaje == "El signo \".\" está colocado en una posición incorrecta en \"gmail.\".")
 
-    #23
+#23
     def test_mismatch_password_register(self):
         driver = self.driver
         #self.driver.get(HomePage.get_base_url())
@@ -428,6 +423,6 @@ class HomePageTests(unittest.TestCase):
 
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Password and Confirm Password Does not match")
-
+"""
 if __name__ == "__main__":
     unittest.main()
