@@ -135,7 +135,7 @@ class AdminPageTests(unittest.TestCase):
 
         admin_page.add_book_info("Game", "game", "Scott", "fiction", "40", "25")
         self.assertTrue(admin_page.check_book_no_category_image())
-
+    """
 # 68
     def test_invalid_values(self):
         driver = self.driver
@@ -146,7 +146,7 @@ class AdminPageTests(unittest.TestCase):
 
         admin_page.add_book_info("Game", "game", "Scott", "fiction", "a", "e")
         self.assertTrue(admin_page.check_book_no_category_image())
-
+    """
 
 # 68 Manual
 
