@@ -15,7 +15,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 warnings.simplefilter("ignore", ResourceWarning)
-"""
+
 class HomePageTests(unittest.TestCase):
 
     def setUp(self):
@@ -27,7 +27,7 @@ class HomePageTests(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
-    
+###   
 #1
     def test_valid_register(self):
         driver = self.driver
@@ -423,6 +423,7 @@ class HomePageTests(unittest.TestCase):
 
         # Hacer el assert del mensaje
         self.assertEqual(message_text, "Password and Confirm Password Does not match")
-"""
+
+###
 if __name__ == "__main__":
     unittest.main()

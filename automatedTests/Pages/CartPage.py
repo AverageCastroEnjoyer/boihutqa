@@ -45,7 +45,7 @@ class CartPage:
 
     def go_continue_shopping(self):
         self.get_continue_shopping().click()
-        time.sleep(2)
+        time.sleep(0.5)
 
     def cart_opened(self):
         actual_message = self.get_continue_shopping().text
@@ -59,7 +59,7 @@ class CartPage:
         self.get_input().clear()
         self.get_input().send_keys('2')
         self.get_update().click()
-        time.sleep(2)
+        time.sleep(0.5)
 
     def check_value(self):
         value = self.get_input().get_attribute("value")
@@ -68,7 +68,7 @@ class CartPage:
 
     def delete_book(self):
         self.get_delete().click()
-        time.sleep(2)
+        time.sleep(0.5)
 
     def check_empty_cart(self):
         actual_message = self.get_empty().text
@@ -76,8 +76,9 @@ class CartPage:
 
     def buy_book(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        self.get_checkout().click()
         time.sleep(1)
+        self.get_checkout().click()
+        time.sleep(0.5)
 
     def check_warning(self):
         actual_message = self.get_warning().text

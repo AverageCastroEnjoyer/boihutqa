@@ -50,6 +50,7 @@ class AdminPage:
 
         self.books = "//*[@id=\"content-main\"]/div[3]/table/tbody/tr[1]/th/a"
         self.book = "//*[@id=\"result_list\"]/tbody/tr[1]/th/a"
+        self.availabe_book = "//*[@id=\"result_list\"]/tbody/tr[3]/th/a"
         self.stock_status = "//*[@id=\"id_stocks_available\"]"
         self.save_book = "//*[@id=\"book_form\"]/div/div/input[1]"
         self.saved_book = "//*[@id=\"main\"]/div/ul"
@@ -183,6 +184,9 @@ class AdminPage:
 
     def get_book(self):
         return self.driver.find_element(By.XPATH, self.book)
+    
+    def get_available_book(self):
+        return self.driver.find_element(By.XPATH, self.availabe_book)
 
     def get_stock_status(self):
         return self.driver.find_element(By.XPATH, self.stock_status)
@@ -314,7 +318,7 @@ class AdminPage:
 
         self.get_dropdown().click()
         self.get_save_order().click()
-        time.sleep(1)
+        time.sleep(0.5)
 
     def check_order_saved(self):
         return self.get_saved_order().is_displayed
@@ -326,18 +330,18 @@ class AdminPage:
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.get_is_admin().click()
         self.get_save_account().click()
-        time.sleep(1)
+        time.sleep(0.5)
 
     def check_account_saved(self):
         return self.get_saved_account().is_displayed
 
     def mark_book_unavailable(self):
         self.get_books().click()
-        self.get_book().click()
+        self.get_available_book().click()
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.get_stock_status().click()
         self.get_save_book().click()
-        time.sleep(1)
+        time.sleep(0.5)
 
     def check_book_saved(self):
         return self.get_saved_book().is_displayed
@@ -346,7 +350,7 @@ class AdminPage:
         self.get_books().click()
         self.get_book().click()
         self.get_history().click()
-        time.sleep(1)
+        time.sleep(0.5)
 
     def check_history_opened(self):
         return self.get_text().is_displayed()
@@ -360,7 +364,7 @@ class AdminPage:
         select.select_by_value("REJECTED")
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.get_save_invoice().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_invoice_saved(self):
         return self.get_saved_invoice().is_displayed()
@@ -375,7 +379,7 @@ class AdminPage:
         self.get_price().send_keys(price)
         self.get_stocks().send_keys(stocks)
         self.get_save_book().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_book_no_category_image(self):
         return self.get_required().is_displayed()
@@ -390,7 +394,7 @@ class AdminPage:
         self.get_delete_category().click()
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.get_confirm_delete_category().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_deleted_category(self):
         actual_message = self.get_deleted_category().text
@@ -402,7 +406,7 @@ class AdminPage:
         self.get_delete_book().click()
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.get_confirm_delete_book().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_deleted_book(self):
         actual_message = self.get_deleted_book().text
@@ -415,7 +419,7 @@ class AdminPage:
         self.get_delete_account().click()
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.get_confirm_delete_account().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_deleted_account(self):
         actual_message = self.get_account_deleted().text
@@ -426,7 +430,7 @@ class AdminPage:
         self.get_category().click()
         self.get_category_des().send_keys("speculative fiction")
         self.get_save_category().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_changed_category(self):
         actual_message = self.get_saved_category().text
@@ -444,7 +448,7 @@ class AdminPage:
         self.get_is_admin().click()
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.get_save_account().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_new_account(self):
         actual_message = self.get_saved_account().text
@@ -452,7 +456,7 @@ class AdminPage:
 
     def logout_task(self):
         self.get_logout().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     def check_logout(self):
         actual_message = self.get_loggedout_text().text

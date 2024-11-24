@@ -16,7 +16,7 @@ import warnings
 
 warnings.simplefilter("ignore", ResourceWarning)
 
-"""
+###
 class LoginTests(unittest.TestCase):
 
     def setUp(self):
@@ -131,7 +131,7 @@ class LoginTests(unittest.TestCase):
         home_page.open_login()
         login_page = LoginPage(driver)
 
-        login_page.login_fill("UsedEmail@test.com","valid")
+        login_page.login_fill("UsedEmail@test.com","truepassword12")
                 
         # Esperar que la página redirija a la página de login (10 segundos de espera)
         WebDriverWait(driver, 10).until(EC.url_to_be("http://127.0.0.1:8000/dashboard/"))
@@ -178,7 +178,7 @@ class LoginTests(unittest.TestCase):
         mensaje = driver.execute_script("return arguments[0].validationMessage;", login_page.get_email())
         #print(f"<{mensaje}>")
         assert(mensaje == "El signo \".\" está colocado en una posición incorrecta en \"invalido.\".")
-"""
+###
 
 if __name__ == "__main__":
     unittest.main()

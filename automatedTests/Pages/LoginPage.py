@@ -30,9 +30,9 @@ class LoginPage:
         #self.get_navbar().click()
         self.get_email().send_keys(email)
         self.get_password().send_keys(password)
-        time.sleep(1)
+        time.sleep(0.5)
         self.get_submit_login().click()
-        time.sleep(1.5)
+        time.sleep(0.5)
 
     @staticmethod
     def get_base_url():

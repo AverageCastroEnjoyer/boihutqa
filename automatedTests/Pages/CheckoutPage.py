@@ -78,25 +78,25 @@ class CheckoutPage:
         self.get_transaction().send_keys(transaction)
         self.get_note().send_keys(note)
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(1)
+        time.sleep(0.5)
         self.get_submit().click()
 
     def order_successful(self):
         return self.get_processing().is_displayed()
 
     def check_division_warning(self):
-        time.sleep(1)
+        time.sleep(0.5)
         actual_message = self.get_division_warning().text
         return actual_message == "Sorry, Division can't contain a number"
 
 
     def check_city_warning(self):
-        time.sleep(1)
+        time.sleep(0.5)
         actual_message = self.get_city_warning().text
         return actual_message == "Sorry, City can't contain number"
 
     def check_transaction_warning(self):
-        time.sleep(1)
+        time.sleep(0.5)
         actual_message = self.get_transaction_warning().text
         return actual_message == "Sorry, transaction Id already exits."
 

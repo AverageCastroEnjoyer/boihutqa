@@ -27,7 +27,7 @@ from automatedTests.Pages import LoginPage
 from automatedTests.Pages.LoginPage import LoginPage
 
 warnings.simplefilter("ignore", ResourceWarning)
-"""
+###
 class CheckoutPageTests(unittest.TestCase):
 
     def setUp(self):
@@ -156,7 +156,7 @@ class CheckoutPageTests(unittest.TestCase):
 
         checkout_page.fill_checkout("Marco", "Solis", "Esparza", "2", "Primero", "38458", "Costa Rica", "322", "Casa cafe")
         self.assertTrue(checkout_page.check_transaction_warning())
-"""
+###
 
 if __name__ == "__main__":
     unittest.main()

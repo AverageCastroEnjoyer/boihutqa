@@ -26,8 +26,7 @@ from automatedTests.Pages.LoginPage import LoginPage
 
 warnings.simplefilter("ignore", ResourceWarning)
 
-
-
+###
 class AdminPageTests(unittest.TestCase):
 
     def setUp(self):
@@ -222,7 +221,6 @@ class AdminPageTests(unittest.TestCase):
         admin_page.logout_task()
         self.assertTrue(admin_page.check_logout())
 
-
-
+###
 if __name__ == "__main__":
     unittest.main()
