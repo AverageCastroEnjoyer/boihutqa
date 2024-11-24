@@ -27,6 +27,7 @@ from automatedTests.Pages.LoginPage import LoginPage
 warnings.simplefilter("ignore", ResourceWarning)
 
 
+
 class AdminPageTests(unittest.TestCase):
 
     def setUp(self):
@@ -48,7 +49,7 @@ class AdminPageTests(unittest.TestCase):
         self.driver.get("http://127.0.0.1:8000/admin/login/?next=/admin/")
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
         self.assertTrue(admin_page.login_successful())
 
 #59
@@ -58,7 +59,7 @@ class AdminPageTests(unittest.TestCase):
         self.driver.get("http://127.0.0.1:8000/admin/login/?next=/admin/")
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admi")
+        admin_page.fill_login("superuser@gmail.com", "admi")
         self.assertTrue(admin_page.login_unsuccesful())
 
 
@@ -72,7 +73,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.change_order_status()
         self.assertTrue(admin_page.check_order_saved())
@@ -83,7 +84,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.change_user()
         self.assertTrue(admin_page.check_account_saved())
@@ -94,7 +95,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.mark_book_unavailable()
         self.assertTrue(admin_page.check_book_saved())
@@ -106,7 +107,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.check_history()
         self.assertTrue(admin_page.check_history_opened())
@@ -118,7 +119,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.change_invoice()
         self.assertTrue(admin_page.check_invoice_saved())
@@ -131,7 +132,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.add_book_info("Game", "game", "Scott", "fiction", "40", "25")
         self.assertTrue(admin_page.check_book_no_category_image())
@@ -142,7 +143,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.add_book_info("Game", "game", "Scott", "fiction", "a", "e")
         self.assertTrue(admin_page.check_book_no_category_image())
@@ -158,7 +159,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.delete_category_task()
         self.assertTrue(admin_page.check_deleted_category())
@@ -170,7 +171,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.delete_book_task()
         self.assertTrue(admin_page.check_deleted_book())
@@ -181,7 +182,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.delete_account_task()
         self.assertTrue(admin_page.check_deleted_account())
@@ -193,7 +194,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.change_category_task()
         self.assertTrue(admin_page.check_changed_category())
@@ -204,7 +205,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.add_account_task("juliangarcia", "Julian", "Garcia", "juliang", "2843274", "juliangarcia@gmail.com")
         self.assertTrue(admin_page.check_new_account())
@@ -216,7 +217,7 @@ class AdminPageTests(unittest.TestCase):
         # self.driver.get(HomePage.get_base_url())
 
         admin_page = AdminPage(driver)
-        admin_page.fill_login("admin@gmail.com", "admin")
+        admin_page.fill_login("superuser@gmail.com", "tuskact4")
 
         admin_page.logout_task()
         self.assertTrue(admin_page.check_logout())

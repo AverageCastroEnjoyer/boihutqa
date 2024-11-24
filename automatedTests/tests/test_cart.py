@@ -22,8 +22,8 @@ from automatedTests.Pages import LoginPage
 from automatedTests.Pages.LoginPage import LoginPage
 
 warnings.simplefilter("ignore", ResourceWarning)
-"""
 
+"""
 class CartPageTests(unittest.TestCase):
 
     def setUp(self):
